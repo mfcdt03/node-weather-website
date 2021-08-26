@@ -3,7 +3,9 @@ const express = require('express');
 const hbs = require('hbs');
 const geocode = require('./utils/geocode');
 const forecast = require('./utils/forecast');
+
 const app = express();
+const port = process.env.PORT || 3000; //for heroku port, use || 3000 for localhost
 
 // Define paths for Express config
 const publicDirectoryPath = path.join(__dirname, '../public');
@@ -103,6 +105,11 @@ app.get('*', (req, res) => {
     errorMSG: 'Page not found',
   });
 });
-app.listen(3000, () => {
-  console.log('Server is up on port 3000');
+app.listen(port, () => {
+  console.log('Server is up on port' + port);
 });
+
+//For deploying node.js to heroku:
+//1. edit package.json and input where and what (node src/app.js) to run.
+//2. make sure app.listen port is updated.
+//3.make sure weather request was made in the correct location
